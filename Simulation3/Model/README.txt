@@ -1,0 +1,63 @@
+#######################################################################################################
+# Training the English Reading model - oral language training and Reading training
+# Executable files : eng_oral and eng_reading
+# Parameters: 
+# -seed : random seed for initial weights (integer)
+# -iteration: training times
+# -trained_weight: load the trained weight to the model
+#######################################################################################################
+To train eng+awl the model, enter the following command in the unix-like terminal with Mikenet installed:
+
+## oral language training 
+sh eng_oral.sh
+
+## reading training: training the OP and OS focused training models with different low oral language proficiency 
+(LP:low proficiency)
+
+sh eng_reading.sh
+
+#######################################################################################################
+# Testing the model's phonological performance and semantic performance
+# Executable file : awl_evaluator
+# Parameters:
+# -key: the information about the training set
+# -patterns: testing set (e.g., exp_jo_taylor_set1.txt) 
+# -semantic: test the model's semantic performance (without this index, the default is to test the model's phonological performance) 
+# -weights: trained weight
+# >:  output file 
+#######################################################################################################
+To test the model, enter the following command in the unix-like terminal with Mikenet installed:
+
+e.g. for listening comprehension (PS)
+./eng_evaluator -key 6kdict.txt -patterns ps_randcon.pat -semantic -weights ../TrainedWeights/Oral/LP/PS_Weight_LP_v1 > PS_LP_v1.txt
+
+e.g. for speaking (SP)
+./eng_evaluator -key 6kdict.txt -patterns sp.pat -weights ../TrainedWeights/Oral/LP/SP_Weight_LP_v1 > SP_LP_v1.txt
+
+e.g. for word comprehension (OS)
+./eng_evaluator -key 6kdict.txt -patterns englishdict_randcon.pat -semantic -weights ../TrainedWeights/Reading/LP/OP/OP_Reading_Weight_LP_v1_t1000000 > OP_focused_OS_LP_v1.txt
+
+e.g. for word naming (OP)
+./eng_evaluator -key 6kdict.txt -patterns englishdict_randcon.pat -weights ../TrainedWeights/Reading/LP/OP/OP_Reading_Weight_LP_v1_t1000000 > OP_focused_OP_LP_v1.txt
+
+
+The evaluator output format:
+For phonology, column names are 'test_name', 'word',  'correctness', 'error score'
+For semantics, column names are 'test_name', 'word', 'unit activation....'
+
+To further compute the accuracy and error scores (euclidean distance) for semantics, a Matlab function is provided    
+e.g. In the Matlab terminal, enter:
+>> examine_semantic_output('PS_LP_v1.txt')
+and this will generate an output file 'nearest_PS_LP_v1.txt'
+
+################################################################################################################################
+#
+# Division of Labour: Compute unique contributions to semantics and phonology from different pathways
+# in the OP focused and OS focused models using the lesioning technique
+#
+################################################################################################################################
+Enter the following command in the unix-like terminal with Mikenet installed:
+
+sh eng_dol.sh
+
+
