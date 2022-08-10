@@ -8,7 +8,7 @@ do
 	do
      
      echo "version=${i}, iteration=${k}"
-     ./awl_oral -seed ${i} -epsilon 0.05 -iteration ${k}
+     ./bin/awl_oral -seed ${i} -epsilon 0.05 -iteration ${k}
 
 	done
 done
