@@ -1,6 +1,11 @@
 bin
+*.o
+*.out
+*.dot
 
 TrainedWeights
+*.gz
+
 triangle-model-headers
 headers
 
