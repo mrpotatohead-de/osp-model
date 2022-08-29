@@ -14,14 +14,19 @@ LDLIBS_OPT := \
 	-lmkl_core \
 	-lm -lpthread -ldl
 
+CPPFLAGS_OPENMP = -I${MIKENET_DIR}/include -I../../headers -fopenmp
+LDFLAGS_OPENMP := -L${MIKENET_DIR}/lib/$(shell uname -m)/openmp
+LDLIBS_OPENMP := -lmikenet -lm
+
 EXE_DIR := bin
 EXE_RAW := $(EXE_DIR)/eng_oral_raw
 EXE_OPT := $(EXE_DIR)/eng_oral_opt
+EXE_OPENMP := $(EXE_DIR)/eng_oral_openmp
 
 SRC := reading_model_recur50_randcon.c eng_oral.c
 
 .PHONY: all
-all: raw opt  ## build all the executable files
+all: raw opt openmp ## build all the executable files
 
 .PHONY: raw
 raw: $(EXE_RAW)		## build executable for english oral experiminet without optimization
@@ -35,9 +40,15 @@ $(EXE_OPT): $(SRC)
 	@mkdir -p $(@D)
 	$(CC) -o $@ $^ $(CFLAGS) $(CPPFLAGS_OPT) $(LDFLAGS_OPT) $(LDLIBS_OPT)
 
+.PHONY: openmp
+openmp: $(EXE_OPENMP)		## build executable for english oral experiminet with openMP
+$(EXE_OPENMP): $(SRC)
+	@mkdir -p $(@D)
+	$(CC) -o $@ $^ $(CFLAGS) $(CPPFLAGS_OPENMP) $(LDFLAGS_OPENMP) $(LDLIBS_OPENMP)
+
 .PHONY: clean
 clean:  ## delete all the executable files and object files
-	-@$(RM) -rv $(EXE_RAW) $(EXE_OPT)
+	-@$(RM) -rv $(EXE_RAW) $(EXE_OPT) $(EXE_OPENMP)
 
 .PHONY: help
 help:   ## print this help message
