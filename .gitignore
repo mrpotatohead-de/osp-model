@@ -3,7 +3,7 @@ log
 *.o
 *.out
 *.dot
-
+out.txt
 TrainedWeights
 *.gz
 
