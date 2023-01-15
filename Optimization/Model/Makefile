@@ -22,16 +22,23 @@ CPPFLAGS_BLIS = -I${MIKENET_DIR}/include -I../../headers -I/home/chingenkuo/ce_w
 LDFLAGS_BLIS := -L${MIKENET_DIR}/lib/$(shell uname -m)/blis -L/home/chingenkuo/ce_ws/blis/lib/zen2
 LDLIBS_BLIS := -lmikenet -lm
 
+CC_CUDA := nvcc
+CFLAGS_CUDA := 
+CPPFLAGS_CUDA = -I/home/nm6114083/ching_ws/mikenet-gpu/include -I../../headers
+LDFLAGS_CUDA := -L/home/nm6114083/ching_ws/mikenet-gpu/lib/$(shell uname -m)/cuda
+LDLIBS_CUDA := -lmikenet -lm  -lcublas
+
 EXE_DIR := bin
 EXE_RAW := $(EXE_DIR)/eng_oral_raw
 EXE_OPT := $(EXE_DIR)/eng_oral_opt
 EXE_OPENMP := $(EXE_DIR)/eng_oral_openmp
 EXE_BLIS := $(EXE_DIR)/eng_oral_blis
+EXE_CUDA := $(EXE_DIR)/eng_oral_cuda
 
 SRC := reading_model_recur50_randcon.c eng_oral.c
 
 .PHONY: all
-all: raw opt openmp blis## build all the executable files
+all: raw opt openmp blis cuda## build all the executable files
 
 .PHONY: raw
 raw: $(EXE_RAW)		## build executable for english oral experiminet without optimization
@@ -56,10 +63,16 @@ blis: $(EXE_BLIS)		## build executable for english oral experiminet with AMD BLI
 $(EXE_BLIS): $(SRC)
 	@mkdir -p $(@D)
 	$(CC) -o $@ $^ $(CFLAGS) $(CPPFLAGS_BLIS) $(LDFLAGS_BLIS) $(LDLIBS_BLIS) /home/chingenkuo/ce_ws/blis/lib/zen2/libblis.a
+    
+.PHONY: cuda
+cuda: $(EXE_CUDA)		## build executable for english oral experiminet with cuBLAS
+$(EXE_CUDA): $(SRC)
+	@mkdir -p $(@D)
+	$(CC_CUDA) -o $@ $^ $(CFLAGS_CUDA) $(CPPFLAGS_CUDA) $(LDFLAGS_CUDA) $(LDLIBS_CUDA)
 
 .PHONY: clean
 clean:  ## delete all the executable files and object files
-	-@$(RM) -rv $(EXE_RAW) $(EXE_OPT) $(EXE_OPENMP) $(EXE_BLIS)
+	-@$(RM) -rv $(EXE_RAW) $(EXE_OPT) $(EXE_OPENMP) $(EXE_BLIS) $(EXE_CUDA)
 
 .PHONY: help
 help:   ## print this help message
