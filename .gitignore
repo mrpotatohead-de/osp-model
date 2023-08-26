@@ -1,0 +1,14 @@
+bin
+log*
+*.o
+*.out
+*.dot
+out.txt
+TrainedWeights
+*.gz
+
+triangle-model-headers
+headers
+
+.DS_Store
+.vscode

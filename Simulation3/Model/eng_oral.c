@@ -4,6 +4,9 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include <time.h>
+
+
 #ifdef unix
 #include <unistd.h>
 #endif
@@ -21,6 +24,11 @@ ExampleSet *sem_examples,*phono_examples;
 
 int main(int argc,char *argv[])
 {
+  printf("Execution Time: Start Timing\n");
+  clock_t start_time = clock();
+  printf("Execution Time: Start Time %f\n",(double)start_time);
+
+
   char cmd[255];
   int hcount=0,scount=0;
   float herr=0,serr=0,dice;
@@ -172,6 +180,12 @@ int main(int argc,char *argv[])
       } else {
 		  
 	  }
+
+  clock_t stop_time = clock();
+  printf("Execution Time: Stop Time %f\n",(double)stop_time);
+  double duration = (double)(stop_time - start_time) / CLOCKS_PER_SEC;
+  printf("Execution Time Parameters iter %d seed %d Time Cost %f\n", iteration, seed, duration);
+
 	  
   return 0;
 

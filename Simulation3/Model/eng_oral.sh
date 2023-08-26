@@ -9,7 +9,7 @@ do
      
      echo "version=${i}, iteration=${k}"
 
-     ./eng_oral -seed ${i} -epsilon 0.05 -iteration ${k}
+     ./bin/eng_oral -seed ${i} -epsilon 0.05 -iteration ${k}
      
 	done
 done

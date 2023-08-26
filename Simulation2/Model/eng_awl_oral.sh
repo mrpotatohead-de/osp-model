@@ -9,7 +9,7 @@ do
      
      echo "version=${i}, iteration=${k}"
 
-     ./eng_awl_oral  -seed ${i} -trained_weights ../TrainedWeights/English/Phase2/English_Phase2_v${i} -epsilon 0.01 -iteration ${k}
+     ./bin/eng_awl_oral  -seed ${i} -trained_weights ../TrainedWeights/English/Phase2/English_Phase2_v${i} -epsilon 0.01 -iteration ${k}
 
 	done
 done
