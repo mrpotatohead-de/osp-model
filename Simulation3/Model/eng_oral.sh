@@ -9,7 +9,7 @@ do
      
      echo "version=${i}, iteration=${k}"
 
-     ./bin/eng_oral -seed ${i} -epsilon 0.05 -iteration ${k}
+     /home/nm6114083/my_ws/osp-model/Simulation3/Model/bin/eng_oral_blis -seed ${i} -epsilon 0.05 -iteration ${k}
      
 	done
 done

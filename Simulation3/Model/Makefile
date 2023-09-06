@@ -4,8 +4,8 @@ CPPFLAGS = -I${MIKENET_DIR}/include -I../../headers
 LDFLAGS := -L${MIKENET_DIR}/lib/$(shell uname -m)
 LDLIBS := -lmikenet -lm 
 
-CPPFLAGS_BLIS = -I${MIKENET_DIR}/include -I../../headers -I/home/chingenkuo/ce_ws/blis/include/zen2
-LDFLAGS_BLIS := -L${MIKENET_DIR}/lib/$(shell uname -m)/blis -L/home/chingenkuo/ce_ws/blis/lib/zen2
+CPPFLAGS_BLIS = -I${MIKENET_DIR}/include -I../../headers -I/home/nm6114083/my_ws/blis/include/zen3
+LDFLAGS_BLIS := -L${MIKENET_DIR}/lib/$(shell uname -m)/blis -L/home/nm6114083/my_ws/blis/lib/zen3
 LDLIBS_BLIS := -lmikenet -lm 
 
 PREFIX ?= eng
@@ -39,7 +39,7 @@ $(EXE_ORAL): $(SRC_ORAL)
 oral_blis: $(EXE_ORAL_BLIS)      ## build executable for oral - blis accelerated
 $(EXE_ORAL_BLIS): $(SRC_ORAL)
 	@mkdir -p $(@D)
-	$(CC) -o $@ $^ $(CFLAGS) $(CPPFLAGS_BLIS) $(LDFLAGS_BLIS) $(LDLIBS_BLIS) /home/chingenkuo/ce_ws/blis/lib/zen2/libblis.a
+	$(CC) -o $@ $^ $(CFLAGS) $(CPPFLAGS_BLIS) $(LDFLAGS_BLIS) $(LDLIBS_BLIS) /home/nm6114083/my_ws/blis/lib/zen3/libblis.a
 
 .PHONY: os-read
 os-read: $(EXE_READ_OS)     ## build executable for OS focused reading
@@ -53,7 +53,7 @@ os-read_blis: $(EXE_READ_OS_BLIS)     ## build executable for OS focused reading
 $(EXE_READ_OS_BLIS): CPPFLAGS_BLIS += -DOS -UOP
 $(EXE_READ_OS_BLIS): $(SRC_READ)
 	@mkdir -p $(@D)
-	$(CC) -o $@ $^ $(CFLAGS) $(CPPFLAGS_BLIS) $(LDFLAGS_BLIS) $(LDLIBS_BLIS) /home/chingenkuo/ce_ws/blis/lib/zen2/libblis.a
+	$(CC) -o $@ $^ $(CFLAGS) $(CPPFLAGS_BLIS) $(LDFLAGS_BLIS) $(LDLIBS_BLIS) /home/nm6114083/my_ws/blis/lib/zen3/libblis.a
 
 .PHONY: op-read
 op-read: $(EXE_READ_OP)     ## build executable for OP focused reading
@@ -67,7 +67,7 @@ op-read_blis: $(EXE_READ_OP_BLIS)     ## build executable for OP focused reading
 $(EXE_READ_OP_BLIS): CPPFLAGS_BLIS += -DOP -UOS
 $(EXE_READ_OP_BLIS): $(SRC_READ)
 	@mkdir -p $(@D)
-	$(CC) -o $@ $^ $(CFLAGS) $(CPPFLAGS_BLIS) $(LDFLAGS_BLIS) $(LDLIBS_BLIS) /home/chingenkuo/ce_ws/blis/lib/zen2/libblis.a
+	$(CC) -o $@ $^ $(CFLAGS) $(CPPFLAGS_BLIS) $(LDFLAGS_BLIS) $(LDLIBS_BLIS) /home/nm6114083/my_ws/blis/lib/zen3/libblis.a
 
 .PHONY: clean
 clean:  ## delete all the executable files and object files
